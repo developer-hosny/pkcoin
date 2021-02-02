@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
     );
     DeployedContract contract = await loadContract();
     final ethFunction = contract.function(functionName);
-    final result = await ethClient.sendTransaction(
+    final result = await ethClient.signTransaction(
       credentials,
       Transaction.callContract(
         contract: contract,
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       ),
       fetchChainIdFromNetworkId: true,
     );
-    return result;
+    return result.first.toString();
   }
 
   Future<String> sendCoin() async {
@@ -182,37 +182,10 @@ class _HomePageState extends State<HomePage> {
     ]);
   }
 
-  Widget _buildContent() {
-    return Stack(
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 30 / 100,
-          width: double.infinity,
-          color: Colors.blue.shade600,
-        ),
-        Stack(
-          children: [
-            SizedBox(
-              height: 25,
-            ),
-            Positioned(
-              child: Text(
-                "\$PKCoin",
-                style: TextStyle(color: Colors.white, fontSize: 32),
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Vx.gray300,
-      // body: _buildContent(),
       body: _buildContentVx(),
     );
   }
